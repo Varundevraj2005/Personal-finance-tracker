@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transactions Summary</title>
+
+  <!-- Bootstrap + Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right,rgb(39, 89, 182), #cfdef3);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      color: #333;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+    }
+
+    .logout-btn:hover {
+      background-color: #bb2d3b;
+    }
+
+    .dashboard-title {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+
+    .summary-box {
+      margin: 50px auto 20px;
+      padding: 40px;
+      max-width: 800px;
+      background-color:rgb(221, 221, 236);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .summary-box h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: #007bff;
+    }
+
+    .summary-box p {
+      font-size: 1.2rem;
+      margin: 15px 0;
+    }
+
+    .summary-box strong {
+      color: #444;
+    }
+
+    .summary-box span {
+      font-weight: 600;
+    }
+
+    .nav-buttons {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .nav-buttons a {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .nav-buttons a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-title {
+        font-size: 2.2rem;
+      }
+
+      .summary-box {
+        margin: 30px 15px;
+        padding: 30px 20px;
+      }
+
+      .nav-buttons a {
+        display: block;
+        width: 90%;
+        margin: 10px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button onclick="logout()" class="logout-btn">Logout</button>
+
+  <h1 class="dashboard-title">Personal Financial Tracker</h1>
+
+  <div class="summary-box text-center">
+    <h2>Financial Summary</h2>
+    <p><strong>Total Income:</strong> <span class="text-success">{{ total_income }}</span></p>
+    <p><strong>Total Expenses:</strong> <span class="text-danger">{{ total_expense }}</span></p>
+    <p><strong>Total Transactions:</strong> <span class="text-info">{{ total_transactions }}</span></p>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="{{ url_for('add_transaction') }}" class="btn btn-primary">➕ Add New Transaction</a>
+    <a href="{{ url_for('all_transactions') }}" class="btn btn-secondary">📋 View All Transactions</a>
+    <a href="{{ url_for('report') }}" class="btn btn-success">📊 Financial Report</a>
+  </div>
+
+  <script>
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      window.location.href = "/login";
+    }
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "/login";
+    }
+  </script>
+</body>
+</html>

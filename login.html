@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finance Tracker - Login</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    /* Background and Global */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1 {
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .form-outline input {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      transition: all 0.3s ease;
+    }
+
+    .form-outline input:focus {
+      border-color: #4b6cb7;
+      box-shadow: 0 0 10px rgba(75, 108, 183, 0.3);
+    }
+
+    .form-label {
+      color: #333;
+      font-weight: 500;
+    }
+
+    .btn-lg {
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.3s ease-in-out;
+    }
+
+    .btn-lg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #showLogin, #showSignup {
+      margin: 0 5px;
+      width: 48%;
+    }
+
+    #loginErrorMsg, #signupErrorMsg {
+      font-size: 14px;
+      color: red;
+      margin-top: -10px;
+    }
+
+    footer a {
+      color: #ffffff;
+      margin: 0 10px;
+      font-size: 20px;
+      transition: 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #e0f7fa;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .form-card {
+        padding: 20px;
+      }
+
+      #showLogin, #showSignup {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="vh-100 d-flex align-items-center">
+    <div class="container">
+      <h1 class="text-center mb-5">Personal Finance Tracker</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5 mb-4">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+               class="img-fluid" alt="Login Illustration" />
+        </div>
+        <div class="col-md-6 col-lg-5">
+          <div class="form-card">
+            <!-- Toggle Buttons -->
+            <div class="d-flex justify-content-between mb-4">
+              <button id="showLogin" class="btn btn-outline-light btn-lg">Login</button>
+              <button id="showSignup" class="btn btn-outline-light btn-lg">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+              <div class="form-outline mb-4">
+                <input type="text" id="loginUsername" class="form-control form-control-lg" placeholder="Enter username" required />
+                <label class="form-label" for="loginUsername">Username</label>
+              </div>
+              <div class="form-outline mb-3">
+                <input type="password" id="loginPassword" class="form-control form-control-lg" placeholder="Enter password" required />
+                <label class="form-label" for="loginPassword">Password</label>
+              </div>
+              <p id="loginErrorMsg"></p>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Login</button>
+              </div>
+            </form>
+
+            <!-- Sign-Up Form -->
+            <form id="signupForm" style="display: none;">
+              <div class="form-outline mb-4">
+                <input type="text" id="signupUsername" class="form-control form-control-lg" placeholder="Choose a username" required />
+                <label class="form-label" for="signupUsername">Username</label>
+              </div>
+              <div class="form-outline mb-3">
+                <input type="password" id="signupPassword" class="form-control form-control-lg" placeholder="Choose a password" required />
+                <label class="form-label" for="signupPassword">Password</label>
+              </div>
+              <div class="form-outline mb-3">
+                <input type="password" id="signupConfirm" class="form-control form-control-lg" placeholder="Confirm password" required />
+                <label class="form-label" for="signupConfirm">Confirm Password</label>
+              </div>
+              <p id="signupErrorMsg"></p>
+              <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">Sign Up</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-3 text-center">
+    <div>© 2025. All rights reserved.</div>
+    <div class="mt-2">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-google"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </footer>
+
+  <!-- JS Script -->
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const showLoginBtn = document.getElementById("showLogin");
+    const showSignupBtn = document.getElementById("showSignup");
+
+    showLoginBtn.addEventListener("click", () => {
+      loginForm.style.display = "block";
+      signupForm.style.display = "none";
+    });
+
+    showSignupBtn.addEventListener("click", () => {
+      loginForm.style.display = "none";
+      signupForm.style.display = "block";
+    });
+
+    function getUsers() {
+      return JSON.parse(localStorage.getItem("users") || "[]");
+    }
+
+    function saveUser(username, password) {
+      const users = getUsers();
+      users.push({ username, password });
+      localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    function findUser(username, password) {
+      return getUsers().find(user => user.username === username && user.password === password);
+    }
+
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+      const user = findUser(username, password);
+
+      if (user) {
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "/";
+      } else {
+        document.getElementById("loginErrorMsg").textContent = "Invalid username or password.";
+      }
+    });
+
+    signupForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const username = document.getElementById("signupUsername").value;
+      const password = document.getElementById("signupPassword").value;
+      const confirm = document.getElementById("signupConfirm").value;
+
+      if (password !== confirm) {
+        document.getElementById("signupErrorMsg").textContent = "Passwords do not match.";
+        return;
+      }
+
+      const users = getUsers();
+      if (users.find(user => user.username === username)) {
+        document.getElementById("signupErrorMsg").textContent = "Username already exists.";
+        return;
+      }
+
+      saveUser(username, password);
+      alert("Registration successful! You can now log in.");
+      showLoginBtn.click();
+    });
+
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      window.location.href = "/";
+    }
+  </script>
+</body>
+</html>

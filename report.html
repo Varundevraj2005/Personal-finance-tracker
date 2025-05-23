@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Report</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='report.css') }}"
+    />
+
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Simple CSS Styling -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color:rgb(102, 136, 148);
+        color: #333;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 800px;
+        margin: auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      h1, h2, h3 {
+        color: #2c3e50;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 6px;
+      }
+
+      nav {
+        margin-top: 20px;
+      }
+
+      nav a {
+        margin-right: 15px;
+        text-decoration: none;
+        color:rgb(210, 222, 230);
+      }
+
+      .download-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      .download-btn:hover {
+        background-color: #219150;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Financial Report</h1>
+      <h2>Total Income: {{ total_income }}</h2>
+      <h2>Total Expenses: {{ total_expense }}</h2>
+
+      <h3>Income Transactions:</h3>
+      <ul>
+        {% for transaction in income %}
+        <li>
+          {{ transaction.amount }} - {{ transaction.category }} - {{ transaction.date }}
+        </li>
+        {% endfor %}
+      </ul>
+
+      <h3>Expense Transactions:</h3>
+      <ul>
+        {% for transaction in expenses %}
+        <li>
+          {{ transaction.amount }} - {{ transaction.category }} - {{ transaction.date }}
+        </li>
+        {% endfor %}
+      </ul>
+
+      <!-- Chart Container -->
+      <div>
+        <canvas id="financeChart" width="400" height="200"></canvas>
+      </div>
+
+      <!-- Download Button -->
+      <button class="download-btn" onclick="downloadReport()">Download Report</button>
+
+      <!-- Navigation Links -->
+      <nav>
+        <a href="{{ url_for('index') }}">Back to Main Page</a>
+        <a href="{{ url_for('add_transaction') }}">Add a New Transaction</a>
+        <a href="{{ url_for('all_transactions') }}">View All Transactions</a>
+      </nav>
+    </div>
+
+    <!-- Chart.js Script -->
+    <script>
+      const ctx = document.getElementById('financeChart').getContext('2d');
+      const financeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: {{ categories | tojson }},
+          datasets: [
+            {
+              label: 'Income',
+              data: {{ income_data | tojson }},
+              backgroundColor: 'rgba(75, 192, 192, 0.5)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Expenses',
+              data: {{ expense_data | tojson }},
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      function downloadReport() {
+        const blob = new Blob([document.documentElement.outerHTML], {
+          type: 'text/html'
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'financial_report.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    </script>
+  </body>
+</html>

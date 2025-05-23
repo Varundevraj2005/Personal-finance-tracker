@@ -1,0 +1,86 @@
+/* login.css */
+
+body {
+  background: linear-gradient(135deg, #74ebd5, #9face6);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  font-weight: 700;
+  color: #343a40;
+}
+
+.container-fluid {
+  padding: 40px;
+}
+
+form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.form-outline input {
+  background-color: #f5f5f5;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.form-outline input:focus {
+  border-color: #007bff;
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+button.btn {
+  width: 100%;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+button.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+}
+
+#showLogin,
+#showSignup {
+  margin: 0 10px;
+}
+
+#loginErrorMsg,
+#signupErrorMsg {
+  font-size: 14px;
+  margin-top: -10px;
+}
+
+footer a {
+  margin: 0 10px;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #d1ecf1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
